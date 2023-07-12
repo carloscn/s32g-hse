@@ -1,0 +1,10 @@
+#!gbuild
+macro __BINDIR=%expand_path(output/bin/release)
+macro CFG_RELEASE=release
+[Build Configuration]
+	-O
+	-cpu=cortexm7
+	-object_dir=output/objs/release
+	:outputDir=output/objs/release
+	:binDir=${__BINDIR}
+

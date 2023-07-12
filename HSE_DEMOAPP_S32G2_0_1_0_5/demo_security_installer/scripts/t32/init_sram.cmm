@@ -1,0 +1,27 @@
+// @file      init_SRAM.cmm
+// @copyright 2019,NXP Semiconductors Confidential Proprietary, All Rights Reserved.
+// @version   0.2
+
+PRIVATE &ppd
+&ppd=OS.PPD()
+
+PRINT "ASSUMPTION: Debugger initialised and attached"
+PRINT "Initialising SRAM using SRAM controller Platform RAM Control..."
+GOSUB SRAM_ECC_init
+PRINT "SRAM initialisation complete"
+ENDDO
+
+SRAM_ECC_init:
+(
+    // Initialize all SRAM by hardware using Platform RAM Control
+    // PRAMCR (Platform RAM Control Register in SRAMC)
+    // SRAMC BASE ADDR: 0x4019C000, SRAMC_1 BASE ADDR: 0x401A0000, 
+    Data.Set EAXI:0x4019C000 %LE %Long 0x1                 
+    Data.Set EAXI:0x401A0000 %LE %Long 0x1
+    
+    // Wait for SRAM init done bits to be set
+    WAIT ((data.long(EAXI:0x4019C00C)&0x00000001)==0x00000001)      
+    WAIT ((data.long(EAXI:0x401A000C)&0x00000001)==0x00000001)      
+    
+    RETURN
+)

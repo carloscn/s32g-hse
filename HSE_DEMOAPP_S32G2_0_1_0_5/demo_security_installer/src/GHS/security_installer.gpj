@@ -1,0 +1,112 @@
+#!gbuild
+
+
+macro HSE_VARIANT="hse_h"
+#component security_installer
+[Program]
+	-object_dir=${%option_value(-object_dir)}
+	{optgroup=GhsCommonOptions} -o security_installer.elf
+	-I../../../interface
+	-I../../../interface/config
+	-I../../../interface/inc_common
+	-I../../../interface/inc_custom
+	-I../../../interface/inc_services
+	-I../security_installer/drivers/gic400
+	-I../security_installer/drivers/mu
+	-I../security_installer/drivers/mc_me
+	-I../security_installer/drivers/stm
+	-I../security_installer/drivers/nvic
+	-I../security_installer/framework/flash
+	-I../security_installer/framework/host_hse/
+	-I../security_installer/framework/host_hse_wrappers/
+	-I../security_installer/framework/host_hse/${HSE_VARIANT}/
+	-I../security_installer/plugins/Base_TS_T40D11M4I0R0/include/
+	-I../security_installer/services/inc
+	-I../security_installer/drivers/qspi/include
+	-I../security_installer/drivers/uart
+	-I../security_installer/framework/console
+	-I../security_installer/target/m7/include
+	-align8
+	-bsp generic
+	-Onone
+    #-Wall
+	-thumb
+	-c99
+	{isdefined(CFG_DEBUG)} -G
+	{isdefined(CFG_DEBUG)} -Onone
+	{isdefined(CFG_RELEASE)} -O
+	-preprocess_assembly_files
+	--no_exceptions
+	-dual_debug
+	--prototype_errors
+	-Wundef
+	-Wimplicit-int
+	-Wshadow
+	-Wtrigraphs
+	-nostartfile
+	--no_commons
+	--incorrect_pragma_warnings
+	-ignore_debug_references
+	-keeptempfiles
+	-list
+	-DGHS
+	-DAUTOSAR_OS_NOT_USED
+
+	-Mn
+	-delete
+	-v
+	-map
+    #-memory
+	-keepmap
+	-larch
+	-lansi
+	-lutf8_s32
+
+
+
+../security_installer/framework/flash/flash.c
+../security_installer/framework/host_hse/hse_host.c
+../security_installer/framework/host_hse_wrappers/hse_host_aead.c
+../security_installer/framework/host_hse_wrappers/hse_host_attr.c
+../security_installer/framework/host_hse_wrappers/hse_host_boot.c
+../security_installer/framework/host_hse_wrappers/hse_host_cipher.c
+../security_installer/framework/host_hse_wrappers/hse_host_hash.c
+../security_installer/framework/host_hse_wrappers/hse_host_mac.c
+../security_installer/framework/host_hse_wrappers/hse_host_otfad.c
+../security_installer/framework/host_hse_wrappers/hse_host_she.c
+../security_installer/framework/host_hse_wrappers/hse_host_sign.c
+../security_installer/framework/host_hse_wrappers/hse_host_kdf.c
+../security_installer/framework/host_hse_wrappers/hse_host_km_import_key.c
+../security_installer/framework/host_hse_wrappers/hse_host_km_format_catalogs.c
+../security_installer/framework/host_hse_wrappers/hse_host_km_utils.c
+../security_installer/framework/host_hse_wrappers/hse_host_km_gen_key.c
+../security_installer/framework/host_hse_wrappers/hse_host_sys_authorization.c
+../security_installer/framework/host_hse_wrappers/hse_host_sys_img.c
+
+../security_installer/drivers/nvic/nvic.c
+../security_installer/drivers/mu/hse_mu.c
+../security_installer/drivers/mc_me/mc_me.c
+../security_installer/drivers/stm/timer.c
+../security_installer/drivers/uart/Serial.c
+../security_installer/framework/console/printf.c
+
+../security_installer/services/src/main.c
+../security_installer/services/src/config.c
+../security_installer/services/src/global_variables.c
+
+../security_installer/services/src/hse_get_version.c
+../security_installer/services/src/hse_config.c
+../security_installer/services/src/hse_crypto.c
+../security_installer/services/src/hse_otfad.c
+../security_installer/services/src/hse_she.c
+../security_installer/services/src/hse_fw_update.c
+../security_installer/services/src/hse_secure_boot.c
+../security_installer/services/src/hse_she_secure_boot.c
+../security_installer/services/src/hse_fuses.c
+
+../security_installer/drivers/qspi/src/Fls_Qspi.c
+../security_installer/drivers/qspi/src/Fls_VS_0_PBcfg.c
+../security_installer/target/m7/src/system_init.c
+../security_installer/target/m7/startup/Startup.s
+../security_installer/target/m7/startup/Vector_core.s
+../security_installer/target/m7/ld/autosar_intram.ld

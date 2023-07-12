@@ -1,0 +1,9 @@
+#!gbuild
+defineConfig ("Debug" "DBGG" "tgt\debug.gpc")
+defineConfig ("Release" "RELG" "tgt\release.gpc")
+primaryTarget=arm_standalone.tgt
+#component top_level_project
+[Project]
+	:sourceDir=.
+security_installer.gpj    [Program]
+tgt\resources.gpj               [Project]

@@ -1,0 +1,37 @@
+// @file      CM7_0_attach_after_boot.cmm
+// @copyright 2019,NXP Semiconductors Confidential Proprietary, All Rights Reserved.
+
+// @brief     Configures debugger, attaches to CM7_0 and halts execution.
+//            Requires that CM7_0 has been started i.e. by successful BootROM execution.
+//            Can proceed to load symbols for booted application or download application into SRAM.
+
+PRIVATE &ppd
+&ppd=OS.PPD()
+
+AREA
+PRINT "Assumption: flash boot process complete, CM7_0 is started by BootROM as application boot core"
+RESet
+
+// Configure debugger and set CPU to CM7_0
+SYStem.CONFIG DEBUGPORTTYPE JTAG
+SYStem.Down
+SYStem.CPU S32G274A-M7-0
+
+SYStem.JtagClock 40MHz
+SYStem.Option DUALPORT ON
+SYStem.memaccess DAP
+SYStem.Option ResBreak off
+
+SYStem.Option TRST off
+ETM.off
+ITM.off
+
+// Attach debug 
+SYStem.Attach
+Break
+Data.List 
+
+PRINT "Attached to CM7_0 and execution halted"
+PRINT "Now load debug symbols to debug flash booted application or load application binary into SRAM."
+
+ENDDO

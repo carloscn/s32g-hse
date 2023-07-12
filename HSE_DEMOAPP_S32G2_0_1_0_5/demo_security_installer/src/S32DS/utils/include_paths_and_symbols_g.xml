@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdtprojectproperties>
+<section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.IncludePaths">
+<language name="C Source File">
+<includepath>${ProjDirPath}/include</includepath>
+<includepath>${ProjDirPath}/board</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/framework/flash</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/framework/host_hse</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/framework/host_hse_wrappers</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/drivers/mc_me</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/drivers/mu</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/drivers/nvic</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/drivers/stm</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/services/inc</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/target/m7/include</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/plugins/Base_TS_T40D11M4I0R0/include</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/drivers/qspi/include</includepath>
+<includepath>${ProjDirPath}/../../../../../interface</includepath>
+<includepath>${ProjDirPath}/../../../../../interface/config</includepath>
+<includepath>${ProjDirPath}/../../../../../interface/inc_common</includepath>
+<includepath>${ProjDirPath}/../../../../../interface/inc_services</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/devices</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/devices/common</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/devices/S32G274A/include</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/devices/S32G274A/startup</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/inc</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/clock/S32Gxx</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/edma</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/pit</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/inc/phy</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/adc_sar</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/dspi</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/flash_external</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/flexcan</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/flexray</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/ftm</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/gmac</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/i2c</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/linflexd</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/llce_can</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/mpu_m7</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/phy</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/pins/siul2_multi_regions</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/power/S32G2xx</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/quadspi</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/rtc_api</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/sema42</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/swt</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/tmu</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/usdhc</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/wkpu</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/drivers/src/xrdc</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/pal/inc</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/pal/src/adc</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/pal/src/ic</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/pal/src/oc</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/platform/pal/src/timing</includepath>
+<includepath>${S32G274A_M7_0_0.8.0_PATH}/tools/wizard_data/S32_DS_Integration/S32G274A/board</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/drivers/uart</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/framework/console</includepath>
+
+</language>
+<language name="ld">
+
+</language>
+<language name="s,S,ASM,asm">
+<includepath>${ProjDirPath}/include</includepath>
+
+</language>
+<language name="Assembly Source File">
+<includepath>${ProjDirPath}/include</includepath>
+
+</language>
+</section>
+<section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.Macros">
+<language name="C Source File">
+<macro>
+<name>CPU_S32G274A</name><value/>
+</macro>
+<macro>
+<name>AUTOSAR_OS_NOT_USED</name><value/>
+</macro>
+
+</language>
+<language name="ld">
+
+</language>
+<language name="s,S,ASM,asm">
+<macro>
+<name>__NO_SYSTEM_INIT</name><value/>
+</macro>
+
+</language>
+<language name="Assembly Source File">
+<macro>
+<name>__NO_SYSTEM_INIT</name><value/>
+</macro>
+
+</language>
+</section>
+</cdtprojectproperties>

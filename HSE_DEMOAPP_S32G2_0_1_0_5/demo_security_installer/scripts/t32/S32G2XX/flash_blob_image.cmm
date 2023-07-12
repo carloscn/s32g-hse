@@ -1,0 +1,167 @@
+// @file      flash_blob_image.cmm
+// @copyright 2019,NXP Semiconductors Confidential Proprietary, All Rights Reserved.
+// @version   0.2
+
+LOCAL &binary
+LOCAL &after_boot
+
+ENTRY &binary &after_boot
+
+LOCAL &QSPI_BASE
+LOCAL &QSPI_Cntl_BASE
+
+; for QSPI0
+&QSPI_BASE=0x00000000       ;qspi0 memory mapped address, not controller address
+&QSPI_Cntl_BASE=0x40134000  ;qspi0 controller base address
+
+; Add commands menu
+DO menu.cmm
+
+SYStem.Down
+
+; ------------------------------------------------------------------------------
+; Setup CPU
+IF ("&after_boot"!="")
+(
+  DO CM7_0_attach_after_boot.cmm
+)
+ELSE
+(
+  DO CM7_0_ungate.cmm "no_elf"; DO  ~~/demo/arm64/hardware/s32g2/scripts/s32g2_connect_m7_0.cmm
+)
+
+; ------------------------------------------------------------------------------
+; Flash Controller Power & Clock Enable
+Data.Set A:0x40030600 %LE %Long 0x0         ;MUX_12_CSC, Clock Mux 14 Selet Control Register
+Data.Set A:0x40030608 %LONG %LE 0x80000000  ;MUX_12_DC_0, Clock Mux 12 divider 0 Control Register
+
+; ------------------------------------------------------------------------------
+; Flash Pin Mux Configuration
+GOSUB QuadSPI_PinMux
+
+; ------------------------------------------------------------------------------
+; Flash Controller Init
+GOSUB QuadSPI_Init
+
+; ------------------------------------------------------------------------------
+; Init SRAM (16KB) for the flash algorithm
+Data.Set SD:0x34000000++03FFF %Long 0x00000000
+
+Break.RESet
+
+FLASH.RESet
+FLASH.Create 0x00000000++0x001fffff    0x1000   TARGET   Byte
+FLASH.TARGET 0x34000000   E:0x34002000   0x2000   ~~/demo/arm/flash/byte/snor_s32g274.bin  /DUALPORT
+
+; ------------------------------------------------------------------------------
+; Flash declaration
+
+; Add path to binary to be programmed
+; &binary=""
+; &binary="..\..\..\images\blob.bin"
+
+FLASH.ReProgram.ALL /Erase
+IF ("&binary"!="")
+(
+  Data.LOAD.binary &binary 0x0
+)
+ELSE
+(
+  Data.LOAD.binary * 0x0
+)
+
+; Load a second binary (e.g. OTFAD example)
+; Data.LOAD.binary "..\..\..\scripts\otfad\example.enc" 0x130000
+
+FLASH.ReProgram.off
+
+; Reset device
+SYStem.Down
+; SYStem.Up
+
+PRINT "Programmed &binary"
+
+ENDDO
+
+QuadSPI_Init:
+(
+  ;Internal DQS pad loopback, SPI x1 mode, AHB and IP modes configured.
+
+  Data.Set A:&QSPI_Cntl_BASE+0x00 %LE %Long 0x000F404C        ; QuadSPI0->MCR =  QuadSPI_MCR_MDIS_MASK; disable module
+  Data.Set A:&QSPI_Cntl_BASE+0x00 %LE %Long 0x020F404C        ; QuadSPI0->MCR =  Select Internal DQS pad loopback
+
+  Data.Set A:&QSPI_Cntl_BASE+0x0C %LE %Long 0x0303            ; QuadSPI0->FLSHCR = QuadSPI_FLSHCR_TCSH(3) | QuadSPI_FLSHCR_TCSS(3); Flash specific
+
+  Data.Set A:&QSPI_Cntl_BASE+0x10 %LE %Long 0x0000040B        ; QuadSPI0->BUF0CR = 32 bytes prefetch size, HSE master ID
+  Data.Set A:&QSPI_Cntl_BASE+0x30 %LE %Long 0x00000400        ; QuadSPI0->BUF0IND = 1024 bytes buffer size
+
+  Data.Set A:&QSPI_Cntl_BASE+0x60 %LE %Long 0x41200507        ; QuadSPI0->DLLCRA; DDLEN=0,FREQEN=1,REFCNTR=1,DLLRES=2,SLV_FINE_OFFSET=0,SLV_DLY_OFFSET=0,SLV_DLY_COARSE=5,SLV_DLY_FINE=0,SLAVE_AUTO_UPDT=0,SLV_EN=1,SLV_DLL_BYPASS=1,SLV_UPD=1.
+
+  Data.Set A:&QSPI_Cntl_BASE+0x104 %LE %Long 0x00000000       ; QuadSPI0->SFACR; PPWB  = 0
+  Data.Set A:&QSPI_Cntl_BASE+0x108 %LE %Long 0x44000000       ; QuadSPI0->SMPR; DLLFSMPFA = 4, DLLFSMPFB = 4.
+  Data.Set A:&QSPI_Cntl_BASE+0x110 %LE %Long 0x00000100       ; QuadSPI0->RBCT; RXBRD = 1, AHB read mode.
+
+  Data.Set A:&QSPI_Cntl_BASE+0x180 %LE %Long 0x01000000       ; QuadSPI0->SFA1AD; set top address to 16MB
+  Data.Set A:&QSPI_Cntl_BASE+0x184 %LE %Long 0x01000000       ; QuadSPI0->SFA2AD; set top address to 0MB
+  Data.Set A:&QSPI_Cntl_BASE+0x188 %LE %Long 0x01000000       ; QuadSPI0->SFB1AD; set top address to 0MB
+  Data.Set A:&QSPI_Cntl_BASE+0x18C %LE %Long 0x01000000       ; QuadSPI0->SFB2AD; set top address to 0MB
+
+  Data.Set A:&QSPI_Cntl_BASE+0x00 %LE %Long 0x020F004C        ; QuadSPI0->MCR =  QuadSPI_MCR_MDIS_MASK; enable module
+
+  &temp=Data.Long(A:&QSPI_Cntl_BASE)
+  Data.Set A:&QSPI_Cntl_BASE %Long (&temp|0x0c00)   ;Clear Tx/Rx buffer
+
+  ;Program LUT0 with READ (SPI 3B address mode)
+  Data.Set A:&QSPI_Cntl_BASE+0x310 %LE %Long 0x08180403   ;   SEQID 0
+  Data.Set A:&QSPI_Cntl_BASE+0x314 %LE %Long 0x24001C08
+  Data.Set A:&QSPI_Cntl_BASE+0x318 %LE %Long 0x0
+
+  RETURN
+)
+
+QuadSPI_PinMux:
+(
+  ;QuadSPI A
+  Data.Set A:0x4009C394 %Long 0x00282021  ; PF_05(85),QuadSPI A DATA 0 ; FLASH_DAT0
+  Data.Set A:0x4009CAB0 %Long 0x2  ; Input Mux PF_05(540)   ,QuadSPI A DATA 0 ; FLASH_DAT0
+
+  Data.Set A:0x4009C398 %Long 0x00282021  ; PF_06(86)   ,QuadSPI A DATA 1 ; FLASH_DAT1
+  Data.Set A:0x4009CAB4 %Long 0x2  ; Input Mux PF_06(541)   ,QuadSPI A DATA 1 ; FLASH_DAT1
+
+  Data.Set A:0x4009C39C %Long 0x00282021  ; PF_07(87)  ,QuadSPI A DATA 2 ; FLASH_DAT2
+  Data.Set A:0x4009CAB8 %Long 0x2  ; Input Mux PF_07(542)  ,QuadSPI A DATA 2 ; FLASH_DAT2
+
+  Data.Set A:0x4009C3A0 %Long 0x00282021  ; PF_08(88)  ,QuadSPI A DATA 3 ; FLASH_DAT3
+  Data.Set A:0x4009CABC %Long 0x2  ; Input Mux PF_8(543)  ,QuadSPI A DATA 3 ; FLASH_DAT3
+
+  Data.Set A:0x4009C3A4 %Long 0x00282021  ; PF_09(89) ,QuadSPI A DATA 4; FLASH_DATA4
+  Data.Set A:0x4009CAC0 %Long 0x2  ; PF_09(544) ,QuadSPI A DATA 4 ; FLASH_DATA4
+
+  Data.Set A:0x4009C3A8 %Long 0x00282021  ; PF_10(90)  ,QuadSPI A DATA 5 ; FLASH_DATA5
+  Data.Set A:0x4009CAC4 %Long 0x2  ; PF10(545)  ,QuadSPI A DATA 5 ; FLASH_DATA5
+
+  Data.Set A:0x4009C3AC %Long 0x00282021  ; PF_11(91)  ,QuadSPI A DATA 6 ; FLASH_DATA6
+  Data.Set A:0x4009CAC8 %Long 0x2  ; PF_11(546)  ,QuadSPI A DATA 6 ; FLASH_DATA6
+
+  Data.Set A:0x4009C3B0 %Long 0x00282021  ; PF_12(92)  ,QuadSPI A DATA 7 ; FLASH_DATA7
+  Data.Set A:0x4009CACC %Long 0x2  ; PF_12(547)  ,QuadSPI A DATA 7 ; FLASH_DATA7
+
+  Data.Set A:0x4009C3B4 %Long 0x00282021  ; PF_13(93)  ,QuadSPI A Data Strobe Input ; FLASH_DATA_STROBE
+  Data.Set A:0x4009CAD0 %Long 0x2  ; PF_13(548)  ,QuadSPI A Data Strobe Input ; FLASH_DATA_STROBE
+
+  Data.Set A:0x4009C3B8 %Long 0x00083020  ; PF_14(94) , QuadSPI A Interrupt
+  Data.Set A:0x4009CAD4 %Long 0x2  ; PF_14(549) , QuadSPI A Interrupt
+
+  Data.Set A:0x4009C3C0 %Long 0x00202021  ; PG_0(96)   ,QuadSPI A CLK + Output ; FLASH_CLK
+  Data.Set A:0x4009C3C4 %Long 0x00202021  ; PG_1(97)   ,QuadSPI A CLK - Output ; FLASH_CLK
+
+  Data.Set A:0x4009C3C8 %Long 0x00202021  ; PG_2(98)   ,QuadSPI A CLK_2 + Output ; FLASH_CLK
+  Data.Set A:0x4009C3CC %Long 0x00202021  ; PG_3(99)   ,QuadSPI A CLK_2 - Output ; FLASH_CLK
+
+  Data.Set A:0x4009C3D0 %Long 0x00203021  ; PG_04(100)   ,QuadSPI A Chip Select 0 Output, ; FLASH_CS0
+  Data.Set A:0x4009C3D4 %Long 0x00203021  ; PG_05(101)   ,QuadSPI A Chip Select 1 Output, ; FLASH_CS1
+
+  ;QuadSPI B is not present
+
+  RETURN
+)

@@ -1,0 +1,16 @@
+{
+    "BLOB": {
+        "IVT": {
+            "config":                 {"option": "y", "path": ""},
+            "content": {
+                "pSysImage":          {"offset": "0x34", "type": "dw", "value": "0xA5000"},
+                "pSysImage_bck":      {"offset": "0x38", "type": "dw", "value": "0xB1000"},
+                "extFlashTypeSysImg": {"offset": "0x3C", "type": "dw", "value": "0"},
+                "flashPageSize":      {"offset": "0x40", "type": "dw", "value": "0x1000"},
+                "extFlashTypeBsb":    {"offset": "0x44", "type": "dw", "value": "0"},
+                "VDD_EFUSE_marker":   {"offset": "0x50", "type": "dw", "value": "0xA55AA55A"},
+                "VDD_EFUSE_word":     {"offset": "0x54", "type": "dw", "value": "0x801903E8"}
+            }
+        }
+    }
+}

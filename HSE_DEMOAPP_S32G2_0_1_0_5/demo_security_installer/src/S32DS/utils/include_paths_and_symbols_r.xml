@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdtprojectproperties>
+<section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.IncludePaths">
+<language name="C Source File">
+<includepath>${ProjDirPath}/board</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/framework/flash</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/framework/host_hse</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/framework/host_hse_wrappers</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/drivers/mc_me</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/drivers/mu</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/drivers/nvic</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/drivers/stm</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/services/inc</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/target/m7/include</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/plugins/Base_TS_T40D11M4I0R0/include</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/drivers/qspi/include</includepath>
+<includepath>${ProjDirPath}/../../../../../interface</includepath>
+<includepath>${ProjDirPath}/../../../../../interface/config</includepath>
+<includepath>${ProjDirPath}/../../../../../interface/inc_common</includepath>
+<includepath>${ProjDirPath}/../../../../../interface/inc_services</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform/devices</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform/devices/common</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform/devices/S32R45/include</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform/devices/S32R45/startup</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform/drivers/inc</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform/drivers/src/clock</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform/drivers/src/edma</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform/drivers/src</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform/drivers/src/clock/S32RxxMulti</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform/drivers/src/dspi</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform/drivers/src/flash_external</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform/drivers/src/pins/siul2_multi_regions</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/platform/drivers/src/quadspi</includepath>
+<includepath>${S32R45_M7_0_0.8.0_PATH}/tools/wizard_data/S32_DS_Integration/S32R45/board</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/drivers/uart</includepath>
+<includepath>${ProjDirPath}/../../../security_installer/framework/console</includepath>
+
+</language>
+<language name="ld">
+
+</language>
+<language name="Assembly Source File">
+<includepath>${ProjDirPath}/include</includepath>
+
+</language>
+<language name="s,S,ASM,asm">
+<includepath>${ProjDirPath}/include</includepath>
+
+</language>
+</section>
+<section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.Macros">
+<language name="C Source File">
+<macro>
+<name>AUTOSAR_OS_NOT_USED</name><value/>
+</macro>
+<macro>
+<name>CPU_S32R45</name><value/>
+</macro>
+
+</language>
+<language name="ld">
+
+</language>
+<language name="Assembly Source File">
+<macro>
+<name>__NO_SYSTEM_INIT</name><value/>
+</macro>
+
+</language>
+<language name="s,S,ASM,asm">
+<macro>
+<name>__NO_SYSTEM_INIT</name><value/>
+</macro>
+
+</language>
+</section>
+</cdtprojectproperties>

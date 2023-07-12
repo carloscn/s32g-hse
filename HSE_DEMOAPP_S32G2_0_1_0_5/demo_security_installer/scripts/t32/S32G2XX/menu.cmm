@@ -1,0 +1,17 @@
+// @file      menu.cmm
+// @copyright 2019,NXP Semiconductors Confidential Proprietary, All Rights Reserved.
+// @version   0.2
+
+PRIVATE &ppd
+&ppd=OS.PPD()
+
+MENU.Reset
+
+; Add button for loading a new elf after BOOT (HSE can be used)
+MENU.AddMenu "Load elf" "CD.DO CM7_0_load_elf_after_boot.cmm"
+; Add button for loading the symbols of the flashed application
+MENU.AddMenu "Load symbols" "CD.DO CM7_0_load_symbols_after_boot.cmm"
+; Add button flashing a new blob
+MENU.AddMenu "Flash blob" "CD.DO flash_blob_image"
+
+ENDDO

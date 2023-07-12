@@ -1,0 +1,32 @@
+The application project for S32R45 CM7_0 core.
+
+The following modification should be done in the project after attachment of
+S32 SDK for S32R45 EAR 0.8.0 to already created project:
+
+1. Add options to Project Setting
+   Go to "Properties->C/C++ Build->Settings->Tool Settings"
+   Select "Standard S32DS C Compiler->Preprocessor"
+   Set "Defined symbols (-D)" options:
+        - START_SECONDARY_CORES
+        - TURN_ON_CPU1 if the project for CM7_1 core is created
+        - TURN_ON_CPU2 if the project for CM7_2 core is created
+
+2. Change S32 Debugger launch configuration
+    Go to "Debug Configurations"
+    Select "S32 Debugger-><project_name>_M7_0_<Debug/Release>_RAM_S32Debug_Load_<ELF/symbols>"
+    Change "Run Commands" in Startup tab to the following commands:
+
+set *0x382A0000 = 0x342A0000
+set *0x382A0004 = 0x382A0025
+set *0x382A0024 = 0xFFFEF7FF
+set *0x38540000 = 0x34540000
+set *0x38540004 = 0x38540025
+set *0x38540024 = 0xFFFEF7FF
+c
+
+Values from commands above are compatible with SDK code.
+If address of Reset Handler or value of Stack Top are changed in SDK code,
+values in "Run Commands" should be changed accordingly.
+
+VDK usage note: 
+The application created with S32 SDK for S32R45 EAR 0.8.0 is not compatible with vpconfig provided by DS.

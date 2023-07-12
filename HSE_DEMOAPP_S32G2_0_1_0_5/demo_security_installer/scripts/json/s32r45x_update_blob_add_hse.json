@@ -1,0 +1,16 @@
+{
+    "BLOB": {
+        "IVT": {
+            "config":                 {"option": "y", "path": ""},
+            "content": {
+                "pHSE":               {"offset": "0x18", "type": "dw", "value": "0x1000"},
+                "pHSE_bck":           {"offset": "0x1C", "type": "dw", "value": "0x53000"},
+                "VDD_EFUSE_marker":   {"offset": "0x50", "type": "dw", "value": "0xA55AA55A"},
+                "VDD_EFUSE_word":     {"offset": "0x54", "type": "dw", "value": "0x801903E8"}
+            }
+        },
+        "HSE": {
+            "config":                 {"option": "y", "path": "..\\..\\hse\\bin\\s32r45x_hse_fw_0.4.0_1.0.1_pb211206.bin.pink"}
+        }
+    }
+}

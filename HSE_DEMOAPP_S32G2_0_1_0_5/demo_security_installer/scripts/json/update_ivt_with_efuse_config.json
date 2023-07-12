@@ -1,0 +1,11 @@
+{
+    "BLOB": {
+        "IVT": {
+            "config":                 {"option": "y", "path": ""},
+            "content": {
+                "VDD_EFUSE_marker":   {"offset": "0x50", "type": "dw", "value": "0xA55AA55A"},
+                "VDD_EFUSE_word":     {"offset": "0x54", "type": "dw", "value": "0x801903E8"}
+            }
+        }
+    }
+}

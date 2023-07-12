@@ -1,0 +1,36 @@
+// @file      CM7_0_load_symbols_after_boot.cmm
+// @copyright 2019, NXP Semiconductors Confidential Proprietary, All Rights Reserved.
+
+// @brief   Simple script demonstrating how to load diag tool ELF after dummy flash boot.        
+
+LOCAL &elf
+ENTRY &elf
+
+PRIVATE &ppd
+&ppd=OS.PPD()
+CD &ppd
+AREA
+
+DO CM7_0_attach_after_boot.cmm
+
+DO menu.cmm
+
+PRINT "Load debug symbols from ELF..."
+; Load symbols from .elf image. Modify below line with path to your own ELF or use the dialog.
+; &elf=
+; &elf="..\..\..\images\fw_installer.elf"
+; &elf="..\..\..\images\HSE_Installer_G_M7_0.elf"
+
+IF ("&elf"!="")
+(
+    Data.Load.Elf &elf /NoCode /MACRO
+)
+ELSE
+(
+    Data.Load.ELF * /NoCode /MACRO
+)
+
+System.option DISmode Thumb
+mode
+
+ENDDO

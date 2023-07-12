@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.nxp.s32ds.debug.ide.s32debugger.flash.core.s32DebuggerFlashProgrammerLaunchConfigurationType">
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.clientCommands" value=""/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.delayInMSeconds" value="0"/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.device" value="S32R45"/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.deviceCoreId" value=""/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.deviceRevision" value=""/>
+<booleanAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.doLaunchServer" value="true"/>
+<booleanAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.doResetAndDelay" value="false"/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.hostnameOrIp" value=""/>
+<booleanAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.initialCore" value="true"/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.initializationScriptPath" value="${S32DS_INITIALIZATION_SCRIPTS_DIR}/s32r45/s32r45_generic_bareboard.py"/>
+<booleanAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.isSemihostingEnabled" value="true"/>
+<booleanAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.isServerLogEnabled" value="false"/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.jtagSpeedKHz" value="16000"/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.port" value=""/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.remoteTimeoutInSeconds" value="30"/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.secureDebuggingType" value=""/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.semihostingPort" value="45001"/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.serverPortNumber" value="45000"/>
+<booleanAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.useEthernet" value="true"/>
+<booleanAttribute key="com.nxp.s32ds.debug.ide.s32debugger.core.useSecureDebugging" value="false"/>
+<mapAttribute key="com.nxp.s32ds.debug.ide.s32debugger.flash.core.binaryIdToBaseAddressMap">
+<mapEntry key="0" value="0"/>
+</mapAttribute>
+<mapAttribute key="com.nxp.s32ds.debug.ide.s32debugger.flash.core.binaryIdToProjectNameMap">
+<mapEntry key="0" value="HSE_Installer_R_M7_0"/>
+</mapAttribute>
+<mapAttribute key="com.nxp.s32ds.debug.ide.s32debugger.flash.core.binaryIsEnabledMap">
+<mapEntry key="0" value="enabled"/>
+</mapAttribute>
+<booleanAttribute key="com.nxp.s32ds.debug.ide.s32debugger.flash.core.flashMemoryErase" value="false"/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.flash.core.flashName" value="MX25UM51245G"/>
+<stringAttribute key="com.nxp.s32ds.debug.ide.s32debugger.flash.core.flashType" value="qspi"/>
+<mapAttribute key="com.nxp.s32ds.debug.ide.s32debugger.flash.core.projectIdToBinaryMap">
+<mapEntry key="0" value="Release_RAM/blob_s32r45x.bin"/>
+</mapAttribute>
+<mapAttribute key="com.nxp.s32ds.debug.ide.s32debugger.flash.core.projectIdToBinaryTypeMap">
+<mapEntry key="0" value="other"/>
+</mapAttribute>
+<booleanAttribute key="com.nxp.s32ds.debug.ide.s32debugger.flash.core.verifyAfterWrite" value="false"/>
+<stringAttribute key="org.eclipse.cdt.dsf.gdb.DEBUG_NAME" value="${S32DS_GDB_ARM32_PY}"/>
+<booleanAttribute key="org.eclipse.cdt.dsf.gdb.UPDATE_THREADLIST_ON_SUSPEND" value="false"/>
+<intAttribute key="org.eclipse.cdt.launch.ATTR_BUILD_BEFORE_LAUNCH_ATTR" value="0"/>
+<stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_REGISTER_GROUPS" value=""/>
+<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="Release_RAM/blob_s32r45x.bin"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="HSE_Installer_R_M7_0"/>
+<stringAttribute key="org.eclipse.dsf.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList context=&quot;reserved-for-future-use&quot;/&gt;&#13;&#10;"/>
+<stringAttribute key="process_factory_id" value="org.eclipse.cdt.dsf.gdb.GdbProcessFactory"/>
+</launchConfiguration>

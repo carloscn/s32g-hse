@@ -1,0 +1,36 @@
+// @file      CM7_0_load_elf_after_boot.cmm
+// @copyright 2019, NXP Semiconductors Confidential Proprietary, All Rights Reserved.
+
+// @brief   Simple script demonstrating how to load diag tool ELF after dummy flash boot.        
+
+LOCAL &elf
+ENTRY &elf
+
+PRIVATE &ppd
+&ppd=OS.PPD()
+CD &ppd
+AREA
+
+DO CM7_0_attach_after_boot.cmm
+DO ..\init_sram.cmm
+
+DO menu.cmm
+
+// Now we can load an ELF. Modify below line with path to your own ELF or use the dialog.
+; &elf=
+; &elf="..\..\..\src\GHS\output\bin\debug\security_installer.elf"
+; &elf="..\..\..\src\S32DS\HSE_Installer_G\HSE_Installer_G_M7_0\Debug_RAM\HSE_Installer_G_M7_0.elf"
+
+IF ("&elf"!="")
+(
+    Data.Load.Elf &elf
+)
+ELSE
+(
+    Data.Load.Elf *
+)
+
+System.option DISmode Thumb
+mode
+
+ENDDO

@@ -1,0 +1,83 @@
+// @file      CM7_0_ungate.cmm
+// @copyright 2019, NXP Semiconductors.
+
+// @brief   This script initialises the debugger and SRAM then ungates the Cortex M7_0 core.
+//          It can be used while the device is idling in serial boot mode. 
+
+//=========================================================================
+// Script environment setup
+//=========================================================================
+
+LOCAL &no_elf
+LOCAL &ram_entry_addr
+
+ENTRY &no_elf &ram_entry_addr
+
+PRIVATE &ppd
+&ppd=OS.PPD()
+CD &ppd
+
+//=========================================================================
+// Debug Session Configuration
+//=========================================================================
+
+// Set CPU to CM7_0 and initialise debugger
+SYStem.CONFIG DEBUGPORTTYPE JTAG
+SYStem.Down
+SYStem.CPU S32G274A-M7-0
+
+SYStem.JtagClock 40MHz
+SYStem.Option DUALPORT ON
+SYStem.memaccess DAP
+SYStem.Option ResBreak off
+
+SYStem.Option TRST off
+ETM.off
+ITM.off
+
+SYStem.mode prepare
+WAIT 0.5s
+
+//=========================================================================
+// Device Initialisation
+//=========================================================================
+
+// Initialize all SRAM 
+DO ..\init_sram.cmm
+
+// The RAM entry point
+; &ram_entry_addr=0x34000000
+
+// Writing infinite loop program to memory for CM7_0 to execute when started
+D.S EAXI:0x34000000 %LE %Long 0
+D.S EAXI:(0x34000000+0x4) %LE %Long (0x34000000+0x25)
+D.S EAXI:(0x34000000+0x24) %LE %Long 0xFFFEF7FF
+
+// Disable CM7_0 software watchdog (SWT/WDOG)
+D.set EAXI:0x40100010 %long %le 0xC520
+D.set EAXI:0x40100010 %long %le 0xD928
+D.set EAXI:0x40100000 %long %le 0xFF000000
+
+// Release reset of CM7_0
+D.S EAXI:0x4008814C %LE %Long 0x34000000          ; (MC_ME_PRTN0_CORE0_ADDR)
+D.S EAXI:0x40088140 %LE %Long 0x1                 ; (MC_ME_PRTN0_CORE0_PCONF -> CCE)
+D.S EAXI:0x40088144 %LE %Long 0x1                 ; (MC_ME_PRTN0_CORE0_PUPD )
+D.S EAXI:0x40088000 %LE %Long 0x5AF0              ; (MC_ME_CTL_KEY)
+D.S EAXI:0x40088000 %LE %Long 0xA50F              ; (MC_ME_CTL_KEY)
+WAIT 0.5s                                           ; (wait for bit to set)
+D.S EAXI:40078040 %LE %Long 0xFFFFFFFE            ; (RGM_PRST0_0 in RGM. RGM_BASE_ADDRESS: 0x40078000)
+
+// Attach debug 
+SYStem.Attach
+Break
+Data.List
+
+PRINT "Attached to CM7_0 and execution halted"
+PRINT "Application executable can now be loaded into SRAM."
+
+IF ("&no_elf"=="")
+(
+    Data.Load.ELF *
+)
+
+ENDDO

@@ -1,0 +1,10 @@
+#!gbuild
+macro __BINDIR=%expand_path(output/bin/debug)
+macro CFG_DEBUG=debug
+[Build Configuration]
+	-G
+	-Onone
+	-cpu=cortexm7
+	-object_dir=output/objs/debug
+	:outputDir=output/objs/debug
+	:binDir=${__BINDIR}
